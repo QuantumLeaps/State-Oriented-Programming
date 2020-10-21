@@ -101,7 +101,6 @@ Event<-4
 C:\tmp\State-Oriented_Programming\c>
 ```
 
-
 ## Embedded Projects
 
 In  order to use the code in your embedded projects you would need to
@@ -136,188 +135,18 @@ Your compiler may allow you to use a simpler form:
 since  specifying  class with the scope operator  ::  should  not  be
 necessary inside the class method (the constructor).
 
-Should you have any questions or comments please feel free to contact
-us directly:
-
-miro@quantum-leaps.com, or
-paulm@IntegriNautics.com
-
 
 ## The QHsmTst Example
 
 Since the publication of the original article, we've added a more
 exhaustive example of a state machine called QHsmTst. The state machine
 is completely artificial, but it contains all possible combinations of
-transitions up to 3 levels of state nesting. This example is borrowed
-from the book "Practical Statecharts in C/C++" by Miro Samek, published
-in 2002.
+transitions up to 3 levels of state nesting.
 
-![QHsmTst state machine](img/qhsmtst.jpg)
- 
-The C version of the example is located in the C directory. You build it
-exactly like the watch example:
+> **NOTE:** This example is borrowed from the book
+["Practical Statecharts in C/C++" by Miro Samek](https://www.state-machine.com/psicc),
+published in 2002.
 
-`gcc hsmtst.c hsm.c -o hsmtst`
-
-The C++ version of the example is located in the C directory. You build it
-exactly like the watch example:
-
-`g++ hsmtst.cpp hsm.cpp -o hsmtst`
-
-
-[![State-Oriented Programming Article](img/thumbnail.jpg)](State-Oriented_Programming.pdf)
-
-
-# State Oriented Programming
-# Hierarchical State Machines in C/C++
-
-## Miro Samek and Paul Y. Montgomery
-## May 13, 2000
-
-The code accompanying the ESP article "" is licensed under the open
-source MIT license (see the top-level comments in the hsm.h/c files).
-
-The code is organized  into  two subdirectories:  C  and  Cpp. Each
-subdirectory  contains the  make.bat batch file to  build the  code
-with the GCC compiler.  This should work both on Windows (requires
-MinGW or similar on GCC for Windows) and Linux/MacOS. The examples
-include the digital watch discussed in the article  as well as the
-"qhsmtst" test for the hierarchical state machine implementation (see
-below).
-
-Alternatively to using the make.bat file, you can simply type the
-following command at the command prompt:
-
-In the C directory:
-
-`gcc watch.c hsm.c -o watch`
-
-In the Cpp directory:
-
-`g++ watch.cpp hsm.cpp -o watch`
-
-
-For your convenience we have included the Windows executable file
-(`watch.exe`), which  you  can try  directly.  You inject events
-into  the watch  state   machine by typing numbers on your keyboard:
-(0=MODE_EVT, 1=SET_EVT, 2=TICK_EVT, 3+ to exit).
-
-![Watch state machine](img/watch.jpg)
-
-Here is an example run for the C version of the watch code:
-
-```
-C:\tmp\State-Oriented_Programming\c>gcc watch.c hsm.c -o watch
-
-C:\tmp\State-Oriented_Programming\c>watch
-Enter:
-0 for MODE_EVT
-1 for SET_EVT
-2 for TICK_EVT
-3+ to exit
-
-Watch::setting-START->hour;
-Event<-0
-time:  1:00:00
-Event<-0
-time:  2:00:00
-Event<-1
-Watch::hour-SET;
-Event<-0
-time:  2:01:00
-Event<-0
-time:  2:02:00
-Event<-1
-Watch::minute-SET;
-Event<-0
-date: 01-02
-Event<-0
-date: 01-03
-Event<-1
-Watch::day-SET;
-Event<-0
-date: 02-03
-Event<-0
-date: 03-03
-Event<-1
-Watch::month-SET;time:  2:02:00
-Event<-2
-Watch::time-TICK;time:  2:02:01
-Event<-2
-Watch::time-TICK;time:  2:02:02
-Event<-0
-Watch::time-MODE;date: 03-03
-Event<-2
-Watch::date-TICK;date: 03-03
-Event<-2
-Watch::date-TICK;date: 03-03
-Event<-1
-Watch::timekeeping-SET;Watch::setting-START->hour;
-Event<-1
-Watch::hour-SET;
-Event<-1
-Watch::minute-SET;
-Event<-1
-Watch::day-SET;
-Event<-1
-Watch::month-SET;date: 03-03
-Event<-0
-Watch::date-MODE;time:  2:02:04
-Event<-4
-
-C:\tmp\State-Oriented_Programming\c>
-```
-
-
-## Embedded Projects
-
-In  order to use the code in your embedded projects you would need to
-extract files `hsm.h` and `hsm.c` from the C subdirectory, or files
-`hsm.hpp` and `hsm.cpp` form the Cpp subdirectory. We have compiled the
-code with a variety  of  C  and  C++ compilers, including:  VC++  and
-Borland compilers for Windows, GCC compiler for Linux, ARM   Software
-Development Toolkit v. 2.0 and 2.5 C compiler, and Green Hills  MULTI
-2000  C  and EC++ ARM/THUMB compilers.
-
-
-## Notes About C++ Implementation
-
-We have noticed one  potential problem with one aspect of the C++
-implementation. Depending  on  the compiler  you  would  use  you may
-encounter  compilation  errors in casting  (upcasting) event handlers
-to a Hsm member function  pointer (EvtHndlr).  This  upcasting  is
-necessary  to  configure  the  state machine  in  the  constructor.
-In our code we use the  most  commonly accepted by different compilers
-cast:
-
-`(EvtHndlr)&<class>::<func>`
-
-newer C++ compilers (but not EC++ compilers) may accept construct:
-
-`reinterpret_cast<EvtHndlr>(&<class>::<func>)`
-
-Your compiler may allow you to use a simpler form:
-
-`(EvtHndlr)<func>`
-
-since  specifying  class with the scope operator  ::  should  not  be
-necessary inside the class method (the constructor).
-
-Should you have any questions or comments please feel free to contact
-us directly:
-
-miro@quantum-leaps.com, or
-paulm@IntegriNautics.com
-
-
-## The QHsmTst Example
-
-Since the publication of the original article, we've added a more
-exhaustive example of a state machine called QHsmTst. The state machine
-is completely artificial, but it contains all possible combinations of
-transitions up to 3 levels of state nesting. This example is borrowed
-from the book "Practical Statecharts in C/C++" by Miro Samek, published
-in 2002.
 
 ![QHsmTst state machine](img/qhsmtst.jpg)
  
@@ -369,5 +198,4 @@ improved hierarchical state machine implementation is now part of that
 framework. Please see the QP Real-Time Embedded Frameworks (RTEFs) at:
 
 https://www.state-machine.com/
-
 
