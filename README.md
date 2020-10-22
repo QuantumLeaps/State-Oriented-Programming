@@ -7,8 +7,13 @@
 ## Miro Samek and Paul Y. Montgomery
 ## May 13, 2000
 
-The code accompanying the ESP article "" is licensed under the open
-source MIT license (see the top-level comments in the hsm.h/c files).
+["State-Oriented Programming"](State-Oriented_Programming.pdf) was
+a cover story article published originally in
+[Embedded Systems Programming](https://www.embedded.com/state-oriented-programming)
+magazine in August 2000. This repository contains the article PDF and the updated code.
+
+The code accompanying the "State-Oriented Programming" ESP article is licensed
+under the open source MIT license (see the top-level comments in the hsm.h/c files).
 
 The code is organized  into  two subdirectories:  C  and  Cpp. Each
 subdirectory  contains the  make.bat batch file to  build the  code
