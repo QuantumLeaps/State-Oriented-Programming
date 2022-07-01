@@ -1,5 +1,8 @@
-[![State-Oriented Programming Article](img/thumbnail.jpg)](State-Oriented_Programming.pdf)
+## Brought to you by:
+[![Quantum Leaps](https://www.state-machine.com/attachments/logo_ql_400.png)](https://www.state-machine.com)
 
+---------------------------------------------------------------------
+[![State-Oriented Programming Article](img/thumbnail.jpg)](State-Oriented_Programming.pdf)
 
 # State Oriented Programming
 # Hierarchical State Machines in C/C++
