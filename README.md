@@ -1,3 +1,7 @@
+Marko Hammersen:
+The only reason for this fork is to include the CPP files of this repository as "lib_deps" in a PlatformIO project. For some reason, PlatformIO only includes the C files of the original repo.
+---------------------------------------------------------
+
 ## Brought to you by:
 [![Quantum Leaps](https://www.state-machine.com/attachments/logo_ql_400.png)](https://www.state-machine.com)
 
