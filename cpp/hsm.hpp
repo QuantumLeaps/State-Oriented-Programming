@@ -42,6 +42,7 @@ class State {
     EvtHndlr hndlr;                             /* state's handler function */
     char const *name;
   public:
+    State(){};
     State(char const *name, State *super, EvtHndlr hndlr);
   private:
     Msg const *onEvent(Hsm *ctx, Msg const *msg) {
