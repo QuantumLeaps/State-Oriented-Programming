@@ -1,5 +1,5 @@
 Marko Hammersen:
-The only reason for this fork is to include the CPP files of this repository as "lib_deps" in a PlatformIO project. For some reason, unkonwn to me, PlatformIO only includes the C files of the original repo.
+The only reason for this fork is to include the CPP files of this repository as "lib_deps" in a PlatformIO project. Somehow, PlatformIO only includes the C files of the original repo.
 ---------------------------------------------------------
 
 ## Brought to you by:
