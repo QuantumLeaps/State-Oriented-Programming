@@ -188,7 +188,8 @@ void HsmTestCtor(HsmTest *me) {
 }
 
 const Msg HsmTestMsg[] = {
-    A_SIG,B_SIG,C_SIG,D_SIG,E_SIG,F_SIG,G_SIG,H_SIG
+    { A_SIG }, { B_SIG }, { C_SIG }, { D_SIG },
+    { E_SIG }, { F_SIG }, { G_SIG }, { H_SIG }
 };
 
 int main() {

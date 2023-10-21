@@ -8,11 +8,13 @@
 #include <assert.h>
 
 class Watch : public Hsm {
-    int tsec, tmin, thour, dday, dmonth;
 protected:
     State timekeeping, time, date;
     State setting, hour, minute, day, month;
     State *timekeepingHist;
+private:
+    int tsec, tmin, thour, dday, dmonth;
+
 public:
     Watch();
     Msg const *topHndlr(Msg const *msg);
@@ -206,16 +208,15 @@ Msg const *Watch::monthHndlr(Msg const *msg) {
 }
 
 Watch::Watch()
-  : Hsm("Watch", (EvtHndlr)topHndlr),
-      timekeeping("timekeeping", &top,
-                  (EvtHndlr)&Watch::timekeepingHndlr),
-    time("time", &timekeeping, (EvtHndlr)&Watch::timeHndlr),
-    date("date", &timekeeping, (EvtHndlr)&Watch::dateHndlr),
-    setting("setting", &top, (EvtHndlr)&Watch::settingHndlr),
-    hour("hour", &setting, (EvtHndlr)&Watch::hourHndlr),
-    minute("minute", &setting, (EvtHndlr)&Watch::minuteHndlr),
-    day("day", &setting, (EvtHndlr)&Watch::dayHndlr),
-    month("month", &setting, (EvtHndlr)&Watch::monthHndlr),
+  : Hsm("Watch", reinterpret_cast<EvtHndlr>(&topHndlr)),
+    timekeeping("timekeeping", &top, reinterpret_cast<EvtHndlr>(&timekeepingHndlr)),
+    time("time",       &timekeeping, reinterpret_cast<EvtHndlr>(&timeHndlr)),
+    date("date",       &timekeeping, reinterpret_cast<EvtHndlr>(&dateHndlr)),
+    setting("setting", &top,         reinterpret_cast<EvtHndlr>(&settingHndlr)),
+    hour("hour",       &setting,     reinterpret_cast<EvtHndlr>(&hourHndlr)),
+    minute("minute",   &setting,     reinterpret_cast<EvtHndlr>(&minuteHndlr)),
+    day("day",         &setting,     reinterpret_cast<EvtHndlr>(&dayHndlr)),
+    month("month",     &setting,     reinterpret_cast<EvtHndlr>(&monthHndlr)),
     tsec(0), tmin(0), thour(0), dday(1), dmonth(1)
 {
     timekeepingHist = &time;

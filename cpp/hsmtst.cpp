@@ -186,12 +186,12 @@ Msg const *HsmTest::s211Hndlr(Msg const *msg) {
 }
 
 HsmTest::HsmTest()
-: Hsm("HsmTest", (EvtHndlr)topHndlr),
-    s1("s1", &top, (EvtHndlr)&HsmTest::s1Hndlr),
-    s11("s11", &s1, (EvtHndlr)&HsmTest::s11Hndlr),
-    s2("s2", &top, (EvtHndlr)&HsmTest::s2Hndlr),
-    s21("s21", &s2, (EvtHndlr)&HsmTest::s21Hndlr),
-    s211("s211", &s21, (EvtHndlr)&HsmTest::s211Hndlr)
+: Hsm("HsmTest",        reinterpret_cast<EvtHndlr>(&topHndlr)),
+    s1("s1",     &top,  reinterpret_cast<EvtHndlr>(&s1Hndlr)),
+    s11("s11",   &s1,   reinterpret_cast<EvtHndlr>(&s11Hndlr)),
+    s2("s2",     &top,  reinterpret_cast<EvtHndlr>(&s2Hndlr)),
+    s21("s21",   &s2,   reinterpret_cast<EvtHndlr>(&s21Hndlr)),
+    s211("s211", &s21,  reinterpret_cast<EvtHndlr>(&s211Hndlr))
 {
     myFoo = 0;
 }

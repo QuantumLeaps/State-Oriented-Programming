@@ -157,7 +157,7 @@ published in 2002.
 
 
 ![QHsmTst state machine](img/qhsmtst.jpg)
- 
+
 The C version of the example is located in the C directory. You build it
 exactly like the watch example:
 

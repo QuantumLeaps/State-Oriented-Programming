@@ -41,9 +41,9 @@ class State {
     State *super;                                  /* pointer to superstate */
     EvtHndlr hndlr;                             /* state's handler function */
     char const *name;
-  public:
+public:
     State(char const *name, State *super, EvtHndlr hndlr);
-  private:
+private:
     Msg const *onEvent(Hsm *ctx, Msg const *msg) {
         return (ctx->*hndlr)(msg);
     }

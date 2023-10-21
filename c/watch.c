@@ -219,9 +219,9 @@ void WatchCtor(Watch *me) {
 }
 
 const Msg watchMsg[] = {
-    Watch_MODE_EVT,
-    Watch_SET_EVT,
-    Watch_TICK_EVT
+    { Watch_MODE_EVT },
+    { Watch_SET_EVT  },
+    { Watch_TICK_EVT }
 };
 
 int main() {

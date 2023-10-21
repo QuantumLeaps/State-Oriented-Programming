@@ -59,7 +59,7 @@ void HsmOnStart(Hsm *me) {
         for (s = me->next; s != me->curr; s = s->super) {
             *(++trace) = s;                         /* trace path to target */
         }
-        while (s = *trace--) {                 /* retrace entry from source */
+        while ((s = *trace--)) {               /* retrace entry from source */
             StateOnEvent(s, me, &entryMsg);
         }
         me->curr = me->next;
@@ -82,7 +82,7 @@ void HsmOnEvent(Hsm *me, Msg const *msg) {
                 for (s = me->next; s != me->curr; s = s->super) {
                     *(++trace) = s;                 /* trace path to target */
                 }
-                while (s = *trace--) {            /* retrace entry from LCA */
+                while ((s = *trace--)) {          /* retrace entry from LCA */
                     StateOnEvent(s, me, &entryMsg);
                 }
                 me->curr = me->next;
@@ -93,7 +93,7 @@ void HsmOnEvent(Hsm *me, Msg const *msg) {
                     for (s = me->next; s != me->curr; s = s->super) {
                         *(++trace) = s;            /* record path to target */
                     }
-                    while (s = *trace--) {             /* retrace the entry */
+                    while ((s = *trace--)) {           /* retrace the entry */
                         StateOnEvent(s, me, &entryMsg);
                     }
                     me->curr = me->next;
@@ -121,13 +121,12 @@ void HsmExit_(Hsm *me, unsigned char toLca) {
 
 /* find # of levels to Least Common Ancestor................................*/
 unsigned char HsmToLCA_(Hsm *me, State *target) {
-    State *s, *t;
     unsigned char toLca = 0;
     if (me->source == target) {
         return 1;
     }
-    for (s = me->source; s; ++toLca, s = s->super) {
-        for (t = target; t; t = t->super) {
+    for (State *s = me->source; s; ++toLca, s = s->super) {
+        for (State *t = target; t; t = t->super) {
             if (s == t) {
                 return toLca;
             }

@@ -36,12 +36,12 @@ static Msg const exitMsg  = { EXIT_EVT };
 
 /* State Ctor...............................................................*/
 State::State(char const *n, State *s, EvtHndlr h)
-        : name(n), super(s), hndlr(h)
+  : super(s), hndlr(h), name(n)
 {}
 
 /* Hsm Ctor.................................................................*/
 Hsm::Hsm(char const *n, EvtHndlr topHndlr)
-        : top("top", 0, topHndlr), name(n)
+  : name(n), top("top", 0, topHndlr)
 {}
 
 /* enter and start the top state............................................*/
@@ -57,7 +57,7 @@ void Hsm::onStart() {
         for (s = next; s != curr; s = s->super) {
             *(++trace) = s;                         /* trace path to target */
         }
-        while (s = *trace--) {                 /* retrace entry from source */
+        while ((s = *trace--)) {               /* retrace entry from source */
             s->onEvent(this, &entryMsg);
         }
         curr = next;
@@ -80,7 +80,7 @@ void Hsm::onEvent(Msg const *msg) {
                 for (s = next; s != curr; s = s->super) {
                     *(++trace) = s;                 /* trace path to target */
                 }
-                while (s = *trace--) {            /* retrace entry from LCA */
+                while ((s = *trace--)) {          /* retrace entry from LCA */
                     s->onEvent(this, &entryMsg);
                 }
                 curr = next;
@@ -91,7 +91,7 @@ void Hsm::onEvent(Msg const *msg) {
                     for (s = next; s != curr; s = s->super) {
                         *(++trace) = s;            /* record path to target */
                     }
-                    while (s = *trace--) {             /* retrace the entry */
+                    while ((s = *trace--)) {           /* retrace the entry */
                         s->onEvent(this, &entryMsg);
                     }
                     curr = next;
@@ -110,7 +110,7 @@ void Hsm::exit_(unsigned char toLca) {
         s->onEvent(this, &exitMsg);
         s = s->super;
     }
-    while (toLca--) {
+    while ((toLca--)) {
         s->onEvent(this, &exitMsg);
         s = s->super;
     }
@@ -119,13 +119,12 @@ void Hsm::exit_(unsigned char toLca) {
 
 /* find # of levels to Least Common Ancestor................................*/
 unsigned char Hsm::toLCA_(State *target) {
-    State *s, *t;
     unsigned char toLca = 0;
     if (source == target) {
         return 1;
     }
-    for (s = source; s; ++toLca, s = s->super) {
-        for (t = target; t; t = t->super) {
+    for (State *s = source; s; ++toLca, s = s->super) {
+        for (State *t = target; t; t = t->super) {
             if (s == t) {
                 return toLca;
             }
