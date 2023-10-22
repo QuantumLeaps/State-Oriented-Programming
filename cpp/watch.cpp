@@ -1,7 +1,7 @@
-/**
- * Simple digital watch example
- * M. Samek, 01/07/00
- */
+//
+// Simple digital watch example
+// M. Samek, 01/07/00
+//
 #include "hsm.hpp"
 
 #include <stdio.h>
@@ -208,24 +208,24 @@ Msg const *Watch::monthHndlr(Msg const *msg) {
 }
 
 Watch::Watch()
-  : Hsm("Watch", reinterpret_cast<EvtHndlr>(&topHndlr)),
-    timekeeping("timekeeping", &top, reinterpret_cast<EvtHndlr>(&timekeepingHndlr)),
-    time("time",       &timekeeping, reinterpret_cast<EvtHndlr>(&timeHndlr)),
-    date("date",       &timekeeping, reinterpret_cast<EvtHndlr>(&dateHndlr)),
-    setting("setting", &top,         reinterpret_cast<EvtHndlr>(&settingHndlr)),
-    hour("hour",       &setting,     reinterpret_cast<EvtHndlr>(&hourHndlr)),
-    minute("minute",   &setting,     reinterpret_cast<EvtHndlr>(&minuteHndlr)),
-    day("day",         &setting,     reinterpret_cast<EvtHndlr>(&dayHndlr)),
-    month("month",     &setting,     reinterpret_cast<EvtHndlr>(&monthHndlr)),
+  : Hsm("Watch",                     static_cast<EvtHndlr>(&Watch::topHndlr)),
+    timekeeping("timekeeping", &top, static_cast<EvtHndlr>(&Watch::timekeepingHndlr)),
+    time("time",       &timekeeping, static_cast<EvtHndlr>(&Watch::timeHndlr)),
+    date("date",       &timekeeping, static_cast<EvtHndlr>(&Watch::dateHndlr)),
+    setting("setting", &top,         static_cast<EvtHndlr>(&Watch::settingHndlr)),
+    hour("hour",       &setting,     static_cast<EvtHndlr>(&Watch::hourHndlr)),
+    minute("minute",   &setting,     static_cast<EvtHndlr>(&Watch::minuteHndlr)),
+    day("day",         &setting,     static_cast<EvtHndlr>(&Watch::dayHndlr)),
+    month("month",     &setting,     static_cast<EvtHndlr>(&Watch::monthHndlr)),
     tsec(0), tmin(0), thour(0), dday(1), dmonth(1)
 {
     timekeepingHist = &time;
 }
 
 const Msg watchMsg[] = {
-    Watch_MODE_EVT,
-    Watch_SET_EVT,
-    Watch_TICK_EVT
+    { Watch_MODE_EVT },
+    { Watch_SET_EVT  },
+    { Watch_TICK_EVT }
 };
 
 int main() {
@@ -239,7 +239,7 @@ int main() {
 
     watch.onStart();
     for (;;)  {
-        char c;
+        int c;
         printf("\nEvent<-");
         c = getc(stdin);
         getc(stdin);

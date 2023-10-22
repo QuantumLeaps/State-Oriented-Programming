@@ -1,11 +1,11 @@
-/**  hsmtest.c -- Hierarchical State Machine test harness.
- *   This is an implementation of the example found in
- *   Practical StateCharts in C/C++ by Miro Samek.
- *   Intent of program is to exercise the state machine implementation.
- *   An earlier implementation published in ESP August 2000 had errors
- *   that were identified by kevin.fleming@philips.com
- *   M. Samek 02-11-25
- */
+//  hsmtest.c -- Hierarchical State Machine test harness.
+//  This is an implementation of the example found in
+//  Practical StateCharts in C/C++ by Miro Samek.
+//  Intent of program is to exercise the state machine implementation.
+//  An earlier implementation published in ESP August 2000 had errors
+//  that were identified by kevin.fleming@philips.com
+//  M. Samek 02-11-25
+//
 
 #include "hsm.hpp"
 
@@ -186,18 +186,19 @@ Msg const *HsmTest::s211Hndlr(Msg const *msg) {
 }
 
 HsmTest::HsmTest()
-: Hsm("HsmTest",        reinterpret_cast<EvtHndlr>(&topHndlr)),
-    s1("s1",     &top,  reinterpret_cast<EvtHndlr>(&s1Hndlr)),
-    s11("s11",   &s1,   reinterpret_cast<EvtHndlr>(&s11Hndlr)),
-    s2("s2",     &top,  reinterpret_cast<EvtHndlr>(&s2Hndlr)),
-    s21("s21",   &s2,   reinterpret_cast<EvtHndlr>(&s21Hndlr)),
-    s211("s211", &s21,  reinterpret_cast<EvtHndlr>(&s211Hndlr))
+: Hsm("HsmTest",        static_cast<EvtHndlr>(&HsmTest::topHndlr)),
+    s1("s1",     &top,  static_cast<EvtHndlr>(&HsmTest::s1Hndlr)),
+    s11("s11",   &s1,   static_cast<EvtHndlr>(&HsmTest::s11Hndlr)),
+    s2("s2",     &top,  static_cast<EvtHndlr>(&HsmTest::s2Hndlr)),
+    s21("s21",   &s2,   static_cast<EvtHndlr>(&HsmTest::s21Hndlr)),
+    s211("s211", &s21,  static_cast<EvtHndlr>(&HsmTest::s211Hndlr))
 {
     myFoo = 0;
 }
 
 const Msg HsmTestMsg[] = {
-    A_SIG,B_SIG,C_SIG,D_SIG,E_SIG,F_SIG,G_SIG,H_SIG
+    { A_SIG }, { B_SIG }, { C_SIG }, { D_SIG },
+    { E_SIG }, { F_SIG }, { G_SIG } ,{ H_SIG }
 };
 
 int main() {
@@ -209,7 +210,7 @@ int main() {
 
     hsmTest.onStart();
     for (;;) {
-        char c;
+        int c;
         printf("\nEvent<-");
         c = getc(stdin);
         getc(stdin);
