@@ -38,9 +38,9 @@ class Hsm;                                           /* forward declaration */
 typedef Msg const *(Hsm::*EvtHndlr)(Msg const *);
 
 class State {
-    State *super;                                  /* pointer to superstate */
-    EvtHndlr hndlr;                             /* state's handler function */
-    char const *name;
+    State *super = NULL;                                  /* pointer to superstate */
+    EvtHndlr hndlr = NULL;                             /* state's handler function */
+    char const *name = "";
   public:
     State(){};
     State(char const *name, State *super, EvtHndlr hndlr);
@@ -62,6 +62,7 @@ public:
     Hsm(char const *name, EvtHndlr topHndlr);                       /* Ctor */
     void onStart();                        /* enter and start the top state */
     void onEvent(Msg const *msg);                 /* "state machine engine" */
+    char const* getName();
 protected:
     unsigned char toLCA_(State *target);
     void exit_(unsigned char toLca);

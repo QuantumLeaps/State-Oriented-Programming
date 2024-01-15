@@ -42,7 +42,16 @@ State::State(char const *n, State *s, EvtHndlr h)
 /* Hsm Ctor.................................................................*/
 Hsm::Hsm(char const *n, EvtHndlr topHndlr)
         : top("top", 0, topHndlr), name(n)
-{}
+{
+  curr = 0;
+  next = 0;
+  source = 0;
+}
+
+char const* Hsm::getName()
+{
+  return curr->name;
+}
 
 /* enter and start the top state............................................*/
 void Hsm::onStart() {
